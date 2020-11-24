@@ -1,0 +1,35 @@
+<div class="col-xl-3 col-md-4">
+    <div class="mb-4">
+        <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
+            <img alt="profile image" src="{% static 'img/customer/user-01.jpg' %} " class="avatar-lg rounded-circle">
+            <div class="ml-sm-3 ml-md-0 ml-lg-3 mt-2 mt-sm-0 mt-md-2 mt-lg-0">
+                <h6 class="mb-0">Jeffrey Akridge</h6>
+                <p class="text-muted mb-0">Member Since Apr 2020</p>
+            </div>
+        </div>
+    </div>
+    <div class="widget settings-menu">
+        <ul role="tablist" class="nav nav-tabs">
+            <li class="nav-item current">
+                <a href="{% url 'click:user-dashboard' %}" class="nav-link active">
+                    <i class="fas fa-chart-line"></i> <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item current">
+                <a href="{% url 'click:user-bookings' %}" class="nav-link">
+                    <i class="far fa-calendar-check"></i> <span>My Bookings</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'click:user-profile' %}" class="nav-link">
+                    <i class="far fa-user"></i> <span>Profile Settings</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'click:user-reviews' %}" class="nav-link">
+                    <i class="far fa-star"></i> <span>Reviews</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

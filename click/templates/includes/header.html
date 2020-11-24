@@ -1,0 +1,105 @@
+<!-- Header -->
+<header class="header">
+    <nav class="navbar navbar-expand-lg header-nav">
+        <div class="navbar-header">
+            <a id="mobile_btn" href="javascript:void(0);">
+                <span class="bar-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </a>
+            <a href="{% url 'click:index' %}" class="navbar-brand logo">
+                <img src="{% static 'img/logo.png' %}" class="img-fluid" alt="Logo">
+            </a>
+            <a href="{% url 'click:index' %}" class="navbar-brand logo-small">
+                <img src="{% static 'img/logo-icon.png' %}" class="img-fluid" alt="Logo">
+            </a>
+        </div>
+        <div class="main-menu-wrapper">
+            <div class="menu-header">
+                <a href="{% url 'click:index' %}" class="menu-logo">
+                    <img src="{% static 'img/logo.png' %}" class="img-fluid" alt="Logo">
+                </a>
+                <a id="menu_close" class="menu-close" href="javascript:void(0);"> <i class="fas fa-times"></i></a>
+            </div>
+            <ul class="main-nav">
+                <li class="active">
+                    <a href="{% url 'click:index' %}">Home</a>
+                </li>
+                <li>
+                    <a href="{% url 'click:about' %}">About</a>
+                </li>
+                <li>
+                    <a href="{% url 'click:categories' %}">Categories</a>
+                </li>
+                <li class="has-submenu">
+                    <a href="provider-dashboard.html">Providers</a>
+                    <ul class="submenu">
+                        <li><a href="provider-dashboard.html">Dashboard</a></li>
+                        <li><a href="my-services.html">Services</a></li>
+                        <li><a href="provider-bookings.html">Bookings</a></li>
+                        <li><a href="provider-settings.html">Profile Settings</a></li>
+                        <li><a href="provider-wallet.html">Wallet</a></li>
+                        <li><a href="provider-subscription.html">Subscription</a></li>
+                        <li><a href="provider-availability.html">Availability</a></li>
+                        <li><a href="provider-reviews.html">Reviews</a></li>
+                        <li><a href="provider-payment.html">Payment</a></li>
+                    </ul>
+                </li>
+                {% comment %} <li class="has-submenu">
+                    <a href="#">Pages <i class="fas fa-chevron-down"></i></a>
+                    <ul class="submenu">
+                        <li><a href="search.html">Search</a></li>
+                        <li><a href="service-details.html">Service Details</a></li>
+                        <li><a href="add-service.html">Add Service</a></li>
+                        <li><a href="edit-service.html">Edit Service</a></li>
+                        <li><a href="chat.html">Chat</a></li>
+                        <li><a href="notifications.html">Notifications</a></li>
+                        <li><a href="about-us.html">About Us</a></li>
+                        <li><a href="contact-us.html">Contact Us</a></li>
+                        <li><a href="faq.html">Faq</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </li> {% endcomment %}
+                <li>
+                    <a href="admin/index.html" target="_blank">Admin</a>
+                </li>
+                <li>
+                    <a href="{% url 'click:contact' %}">Contact</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="has-submenu">
+                    <a href="javascript:void(0);">Welcome {{ user.first_name }} <i class="fas fa-chevron-down"></i></a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'click:user-dashboard' %}">Dashboard</a></li>
+                        <li><a href="{% url 'click:user-bookings' %}">Bookings</a></li>
+                        <li><a href="{% url 'click:user-profile' %}">Profile Settings</a></li>
+                        <li><a href="{% url 'click:user-reviews' %}">Reviews</a></li>
+                        <li><a href="{% url 'click:auth-logout' %}">Logout</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li>
+                    <a href="{% url 'click:login' %}">Login</a>
+                </li>
+                {% endif %}
+                {% comment %} <li>
+                    <a href="javascript:void(0);" data-toggle="modal" data-target="#provider-register">Become a
+                        Professional</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" data-toggle="modal" data-target="#user-register">Become a User</a>
+                </li> {% endcomment %}
+            </ul>
+        </div>
+        {% comment %} <ul class="nav header-navbar-rht">
+            <li class="nav-item">
+                <a class="nav-link header-login" href="javascript:void(0);" data-toggle="modal"
+                    data-target="#login_modal">Login</a>
+            </li>
+        </ul> {% endcomment %}
+    </nav>
+</header>
+<!-- /Header -->

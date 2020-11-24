@@ -1,0 +1,15 @@
+.sidebar-overlay {
+    z-index: 998;
+}
+
+.main-nav > li > a::after {
+    content: unset;
+}
+
+.how-work{
+    background-color: #fafafa;
+}
+
+.popular-services{
+    background-color: unset;
+}

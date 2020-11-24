@@ -1,0 +1,77 @@
+{% extends "layouts/layout.html" %}
+
+{% block title %}Categories{% endblock %}
+
+{% block content %}
+
+
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="breadcrumb-title">
+                    <h2>About Us</h2>
+                </div>
+            </div>
+            <div class="col-auto float-right ml-auto breadcrumb-menu">
+                <nav aria-label="breadcrumb" class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index-2.html">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">About Us</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Breadcrumb -->
+
+<section class="about-us">
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <div class="about-blk-content">
+                        <h4>Experienced and Reliable</h4>
+                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            leo quam aliquet congue placerat mi id nisi interdum mollis. Praesent pharetra, justo ut
+                            scel erisque the mattis, leo quam aliquet congue justo ut scelerisque. Praesent pharetra,
+                            justo ut scelerisque the mattis, leo quam aliquet congue justo ut scelerisque.</p>
+                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            leo quam aliquet congue placerat mi id nisi interdum mollis. Praesent pharetra, justo ut
+                            scel erisque the mattis, leo quam aliquet congue justo ut scelerisque. Praesent pharetra,
+                            justo ut scelerisque the mattis, leo quam aliquet congue justo ut scelerisque.</p>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="about-blk-image">
+                        <img src="{% static 'img/about.jpg' %}" class="img-fluid" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="call-us">
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <span>Free Consultation</span>
+                <h2>Ready to start your dream project?</h2>
+                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod. Nunc placerat mi id
+                    nisi interdum mollis</p>
+            </div>
+            <div class="col-6 call-us-btn">
+                <a href="javascript:void(0);" class="btn btn-call-us">Request A Free Consultation</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+{% include 'includes/works.html' %}
+<!-- /How It Works -->
+
+{% endblock content %}
