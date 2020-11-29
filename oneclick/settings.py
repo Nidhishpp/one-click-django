@@ -32,8 +32,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'click.apps.ClickConfig',
-    'admin.apps.AdminConfig',
-    # 'django.contrib.admin',
+    # 'admin.apps.AdminConfig',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
