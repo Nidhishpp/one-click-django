@@ -10,9 +10,9 @@
             <div class="col-lg-8">
                 <div class="service-view">
                     <div class="service-header">
-                        <h1>Car Repair Services</h1>
-                        <address class="service-location"><i class="fas fa-location-arrow"></i> Hanover, Maryland
-                        </address>
+                        <h1>{{ service.title }}</h1>
+                        {% comment %} <address class="service-location"><i class="fas fa-location-arrow"></i> Hanover, Maryland
+                        </address> {% endcomment %}
                         <div class="rating">
                             <i class="fas fa-star filled"></i>
                             <i class="fas fa-star filled"></i>
@@ -22,20 +22,20 @@
                             <span class="d-inline-block average-rating">(5)</span>
                         </div>
                         <div class="service-cate">
-                            <a href="search.html">Automobile</a>
+                        {{ service.category.title }}
                         </div>
                     </div>
                     <div class="service-images service-carousel">
                         <div class="images-carousel owl-carousel owl-theme">
                             <div class="item">
+                                <img src="{{ service.image.url }}" alt="{{ service.title }}" class="img-fluid">
+                            </div>
+                            {% comment %} <div class="item">
                                 <img src="{% static 'img/services/service-02.jpg' %}" alt="" class="img-fluid">
                             </div>
                             <div class="item">
                                 <img src="{% static 'img/services/service-02.jpg' %}" alt="" class="img-fluid">
-                            </div>
-                            <div class="item">
-                                <img src="{% static 'img/services/service-02.jpg' %}" alt="" class="img-fluid">
-                            </div>
+                            </div> {% endcomment %}
                         </div>
                     </div>
                     <div class="service-details">
@@ -46,7 +46,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"
-                                    role="tab" aria-controls="pills-profile" aria-selected="false">Services Offered</a>
+                                    role="tab" aria-controls="pills-profile" aria-selected="false">Features</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="pills-book-tab" data-toggle="pill" href="#pills-book" role="tab"
@@ -59,9 +59,7 @@
                                 <div class="card service-description">
                                     <div class="card-body">
                                         <h5 class="card-title">Service Details</h5>
-                                        <p class="mb-0">Car wash is a facility used to clean the exterior and, in some
-                                            cases, the interior of motor vehicles. Car washes can be self-serve, fully
-                                            automated, or full-service with attendants who wash the vehicle.</p>
+                                        <p class="mb-0">{{ service.description }}.</p>
                                     </div>
                                 </div>
                             </div>
@@ -69,14 +67,10 @@
                                 aria-labelledby="pills-profile-tab">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Services Offered</h5>
+                                        <h5 class="card-title">Features</h5>
                                         <div class="service-offer">
                                             <ul class="list-bullet">
-                                                <li>Lorem Ipsum</li>
-                                                <li>Lorem Ipsum</li>
-                                                <li>Lorem Ipsum</li>
-                                                <li>Lorem Ipsum</li>
-                                                <li>Lorem Ipsum</li>
+                                                <li>{{ service.features }}</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -449,36 +443,10 @@
             <div class="col-lg-4 theiaStickySidebar">
                 <div class="sidebar-widget widget">
                     <div class="service-amount">
-                        <span>$150</span>
+                        <span>₹{{ service.price }}</span>
                     </div>
                     <div class="service-book">
                         <a href="book-service.html" class="btn btn-primary"> Book Service </a>
-                    </div>
-                </div>
-                <div class="card provider-widget clearfix">
-                    <div class="card-body">
-                        <h5 class="card-title">Service Provider</h5>
-                        <div class="about-author">
-                            <div class="about-provider-img">
-                                <div class="provider-img-wrap">
-                                    <a href="javascript:void(0);">
-                                        <img class="img-fluid rounded-circle" alt=""
-                                            src="{% static 'img/provider/provider-01.jpg' %}">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="provider-details">
-                                <a href="javascript:void(0);" class="ser-provider-name">Thomas Herzberg</a>
-                                <p class="last-seen"><i class="fas fa-circle online"></i> Online</p>
-                                <p class="text-muted mb-1">Member Since Apr 2020</p>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="provider-info">
-                            <p class="mb-1"><i class="far fa-envelope"></i> <a href="#">thomasherzberg@example.com</a>
-                            </p>
-                            <p class="mb-0"><i class="fas fa-phone-alt"></i> xxxxxxxx33</p>
-                        </div>
                     </div>
                 </div>
                 <div class="card available-widget">

@@ -1,8 +1,10 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
+from .models import *
+from django.db.models import Count
 
 # Test Functions
 def not_auth(user):
@@ -11,19 +13,25 @@ def not_auth(user):
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    categories = category.objects.filter(featured=1).annotate(service_count=Count('service'))
+    services = service.objects.filter(featured=1)
+    return render(request, 'index.html',{'categories':categories,'services':services})
 
 
 def categories(request):
-    return render(request, 'categories.html')
+    categories = category.objects.annotate(service_count=Count('service'))
+    return render(request, 'categories.html',{'categories':categories})
 
 
-def services(request):
-    return render(request, 'services.html')
+def services_page(request,id):
+    services = service.objects.filter(category=id)
+    services_count = len(services)
+    return render(request, 'services.html',{'services':services,'services_count':services_count})
 
 
-def service(request):
-    return render(request, 'service.html')
+def service_page(request,id):
+    serviceData = service.objects.get(id=id)
+    return render(request, 'service.html',{'service':serviceData})
 
 
 @user_passes_test(not_auth, 'click:user-dashboard', redirect_field_name='')

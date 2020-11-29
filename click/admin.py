@@ -8,7 +8,7 @@ class adminService(admin.ModelAdmin):
 
 class adminCategory(admin.ModelAdmin):
     
-    list_display=('title','image','feature')
+    list_display=('title','image','featured')
 
 admin.site.register(service,adminService)
 admin.site.register(category,adminCategory)

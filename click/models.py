@@ -7,10 +7,8 @@ from PIL import Image
 class category(models.Model):
     title=models.CharField(max_length=200)
     slug = models.SlugField(max_length=200)
-    feature=models.BooleanField(default=False)
-    image=models.ImageField(upload_to='pics',default='SOME STRING')
-    
-
+    featured=models.BooleanField(default=False)
+    image=models.ImageField(upload_to='category',default='SOME STRING')
     def __str__(self):
         return self.title
     class Meta: 
@@ -18,13 +16,14 @@ class category(models.Model):
 
 class service(models.Model):
     title=models.CharField(max_length=200)
-    image=models.ImageField(upload_to='pics',default='SOME STRING')
+    image=models.ImageField(upload_to='service',default='SOME STRING')
     description=models.TextField()
     feature=models.CharField(max_length=200)
     price=models.IntegerField(default=10)
     category=models.ForeignKey(category,  on_delete=models.CASCADE)
     featured=models.BooleanField(default=False)
     visible=models.BooleanField(default=True)
+
 class comments(models.Model):
     comment=models.TextField()
     rating=models.IntegerField(default=0)
