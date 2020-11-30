@@ -2,6 +2,9 @@ from django.db import models
 from django.db import connections
 from django.contrib.auth.models import User
 from PIL import Image
+from django.utils.timezone import now
+
+
  
 
 class category(models.Model):
@@ -23,15 +26,29 @@ class service(models.Model):
     category=models.ForeignKey(category,  on_delete=models.CASCADE)
     featured=models.BooleanField(default=False)
     visible=models.BooleanField(default=True)
+    def __str__(self):
+        return self.title
+
+
+class booking(models.Model):
+    booking_date=models.DateTimeField( auto_now_add=True,editable=False)
+    date=models.DateField(default=now)
+    time=models.TimeField(default=now)
+    location=models.TextField()
+    phn=models.BigIntegerField(verbose_name="Phone Number")
+    staff=models.ForeignKey(User,on_delete=models.CASCADE,related_name='staff')
+    status = models.CharField(max_length=256, choices=[('Pending', 'Pending'), ('Staff assigned', 'Staff assigned'),('In progress', 'In progress'),('Completed', 'Completed'),('Canceled', 'Canceled')])
+    service=models.ForeignKey(service,on_delete=models.CASCADE)
+    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='user')
+
 
 class comments(models.Model):
     comment=models.TextField()
     rating=models.IntegerField(default=0)
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     service=models.ForeignKey(service,on_delete=models.CASCADE)
+    booking=models.ForeignKey(booking,on_delete=models.CASCADE)
     created_at=models.DateTimeField( auto_now_add=True)
     class Meta: 
         verbose_name = "Review"
-    
-    
-    
+
