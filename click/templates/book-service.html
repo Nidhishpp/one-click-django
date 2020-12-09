@@ -13,31 +13,44 @@
                 <div class="section-header text-center">
                     <h2>Book Service</h2>
                 </div>
-                <form>
+                <form action="/book-service/{{service.id}}" method="POST" >{% csrf_token %}
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label>Service Location <span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" placeholder="Enter a location"
-                                    autocomplete="off">
+                                <label>Service  <span class="text-danger"></span></label>
+                                <input class="form-control" type="text" placeholder="{{service.title}}"
+                                    autocomplete="off" readonly>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Service amount</label>
-                                <input class="form-control" type="text" value="$100" readonly>
+                                <input class="form-control" type="text"  value="₹ {{service.price}}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Location <span class="text-danger">*</span></label>
+                                <input class="form-control " type="text" name="location">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Phone <span class="text-danger">*</span></label>
+                                <input class="form-control "  name="phone" type="text">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Date <span class="text-danger">*</span></label>
-                                <input class="form-control datepicker" type="text">
+                                <input class="form-control datepicker " type="text" name="date">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Time slot <span class="text-danger">*</span></label>
-                                <input class="form-control timepicker" type="text">
+                                <input class="form-control timepicker" type="text" name="time">
+                        
                                 {% comment %} <select class="form-control">
                                     <option>10:00 AM</option>
                                     <option>11:00 AM</option>
@@ -52,18 +65,10 @@
                                 </select> {% endcomment %}
                             </div>
                         </div>
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <div class="text-center">
-                                    <div id="load_div"></div>
-                                </div>
-                                <label>Notes</label>
-                                <textarea class="form-control" rows="5"></textarea>
-                            </div>
-                        </div>
+                       
                     </div>
                     <div class="submit-section">
-                        <button class="btn btn-primary submit-btn" type="submit">Continue to Book</button>
+                        <button class="btn btn-primary submit-btn" type="submit">Book Booking</button>
                     </div>
                 </form>
             </div>
@@ -78,7 +83,7 @@
     $(function () {
         $(".datepicker").datetimepicker({
             timepicker: false,
-            format: 'd.m.Y',
+            format: 'Y-m-d',
             minDate: +2,
         });
 

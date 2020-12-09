@@ -53,6 +53,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'oneclick.urls'
+DATE_INPUT_FORMATS = ['%d-%m-%Y']
 
 TEMPLATES = [
     {

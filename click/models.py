@@ -34,7 +34,7 @@ class service(models.Model):
 
 class booking(models.Model):
     booking_date = models.DateTimeField(auto_now_add=True, editable=False)
-    date = models.DateField(default=now)
+    date = models.DateField(default=now,blank=True, null=True)
     time = models.TimeField(default=now)
     location = models.TextField()
     phn = models.BigIntegerField(verbose_name="Phone Number")

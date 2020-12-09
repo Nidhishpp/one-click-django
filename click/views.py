@@ -39,8 +39,30 @@ def service_page(request, id):
     return render(request, 'service.html', {'service': serviceData, 'relateds': relateds})
 
     
-def book_service(request):
-    return render(request, 'book-service.html')
+def book_service(request,id):
+
+    if request.method=='POST':
+        service_=service.objects.get(id=id)
+
+        post=booking()
+        post.date=request.POST.get('date')
+        post.time=request.POST.get('time')
+        post.location=request.POST.get('location')
+        post.phn=request.POST.get('phone')
+        post.service=service_
+        post.user=request.user
+        post.save()
+        return render(request, 'book-service.html',{'service':service_})
+
+
+
+
+    else:
+        print("ksjdfsdjfsfjksdfsjdkfsdfnnnnnnnnnnnnnnnnnnnnn",id)
+        service_=service.objects.get(id=id)
+        print("ksjdfsdjfsfjksdfsjdkfsdfnnnnnnnnnnnnnnnnnnnnn",service_)
+        return render(request, 'book-service.html',{'service':service_})
+
 
 
 @user_passes_test(not_auth, 'click:user-dashboard', redirect_field_name='')
