@@ -11,6 +11,9 @@
   "python.analysis.extraPaths": [
     "./"
   ],
+  "python.linting.pylintArgs": [
+    "--load-plugins=pylint_django",
+  ],
   "files.associations": {
     "**/*.html": "html",
     "*.html": "html",

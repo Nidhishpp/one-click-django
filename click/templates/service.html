@@ -1,5 +1,7 @@
 {% extends "layouts/layout.html" %}
 
+{% load extra_tags %}
+
 {% block title %}Service{% endblock %}
 
 {% block content %}
@@ -11,7 +13,8 @@
                 <div class="service-view">
                     <div class="service-header">
                         <h1>{{ service.title }}</h1>
-                        {% comment %} <address class="service-location"><i class="fas fa-location-arrow"></i> Hanover, Maryland
+                        {% comment %} <address class="service-location"><i class="fas fa-location-arrow"></i> Hanover,
+                            Maryland
                         </address> {% endcomment %}
                         <div class="rating">
                             <i class="fas fa-star filled"></i>
@@ -22,7 +25,7 @@
                             <span class="d-inline-block average-rating">(5)</span>
                         </div>
                         <div class="service-cate">
-                        {{ service.category.title }}
+                            {{ service.category.title }}
                         </div>
                     </div>
                     <div class="service-images service-carousel">
@@ -70,7 +73,9 @@
                                         <h5 class="card-title">Features</h5>
                                         <div class="service-offer">
                                             <ul class="list-bullet">
-                                                <li>{{ service.features }}</li>
+                                                {% for feature in service.feature|split:"," %}
+                                                <li>{{ feature }}</li>
+                                                {% endfor %}
                                             </ul>
                                         </div>
                                     </div>
@@ -81,8 +86,8 @@
                                     <div class="card-body">
                                         <div class="review-list">
                                             <div class="review-img">
-                                                <img class="rounded-circle" src="{% static 'img/customer/user-01.jpg' %}"
-                                                    alt="">
+                                                <img class="rounded-circle"
+                                                    src="{% static 'img/customer/user-01.jpg' %}" alt="">
                                             </div>
                                             <div class="review-info">
                                                 <h5>Jeffrey Akridge</h5>
@@ -109,28 +114,25 @@
                 <h4 class="card-title">Related Services</h4>
                 <div class="service-carousel">
                     <div class="popular-slider owl-carousel owl-theme">
-
+                        {% for related in relateds %}
                         <div class="service-widget">
                             <div class="service-img">
                                 <a href="service-details.html">
-                                    <img class="img-fluid serv-img" alt="Service Image"
-                                        src="{% static 'img/services/service-03.jpg' %}">
+                                    <img class="img-fluid serv-img" alt="Service Image" src="{{ related.image.url }}">
                                 </a>
                                 <div class="item-info">
                                     <div class="service-user">
-                                        <a href="#">
-                                            <img src="{% static 'img/customer/user-03.jpg' %}" alt="">
-                                        </a>
-                                        <span class="service-price">$2</span>
+                                        <span class="service-price">₹{{ related.price }}</span>
                                     </div>
                                     <div class="cate-list">
-                                        <a class="bg-yellow" href="service-details.html">Electrical</a>
+                                        <a class="bg-yellow"
+                                            href="service-details.html">{{ related.category.title }}</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="service-content">
                                 <h3 class="title">
-                                    <a href="service-details.html">Electric Panel Repairing Service</a>
+                                    <a href="service-details.html">{{ related.title }}</a>
                                 </h3>
                                 <div class="rating">
                                     <i class="fas fa-star filled"></i>
@@ -140,303 +142,9 @@
                                     <i class="fas fa-star"></i>
                                     <span class="d-inline-block average-rating">(4.5)</span>
                                 </div>
-                                <div class="user-info">
-                                    <div class="row">
-                                        <span class="col-auto ser-contact"><i class="fas fa-phone mr-1"></i>
-                                            <span>xxxxxxxx30</span></span>
-                                        <span class="col ser-location"><span>Kalispell, Montana</span> <i
-                                                class="fas fa-map-marker-alt ml-1"></i></span>
-                                    </div>
-                                </div>
                             </div>
                         </div>
-
-                        <div class="service-widget">
-                            <div class="service-img">
-                                <a href="service-details.html">
-                                    <img class="img-fluid serv-img" alt="Service Image"
-                                        src="{% static 'img/services/service-04.jpg' %}">
-                                </a>
-                                <div class="item-info">
-                                    <div class="service-user">
-                                        <a href="#">
-                                            <img src="{% static 'img/customer/user-04.jpg' %}" alt="">
-                                        </a>
-                                        <span class="service-price">$14</span>
-                                    </div>
-                                    <div class="cate-list">
-                                        <a class="bg-yellow" href="service-details.html">Car Wash</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="service-content">
-                                <h3 class="title">
-                                    <a href="service-details.html">Steam Car Wash</a>
-                                </h3>
-                                <div class="rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <span class="d-inline-block average-rating">(0)</span>
-                                </div>
-                                <div class="user-info">
-                                    <div class="row">
-                                        <span class="col-auto ser-contact"><i class="fas fa-phone mr-1"></i>
-                                            <span>xxxxxxxx74</span></span>
-                                        <span class="col ser-location"><span>Electra, Texas</span> <i
-                                                class="fas fa-map-marker-alt ml-1"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="service-widget">
-                            <div class="service-img">
-                                <a href="service-details.html">
-                                    <img class="img-fluid serv-img" alt="Service Image"
-                                        src="{% static 'img/services/service-05.jpg' %}">
-                                </a>
-                                <div class="item-info">
-                                    <div class="service-user">
-                                        <a href="#">
-                                            <img src="{% static 'img/customer/user-05.jpg' %}" alt="">
-                                        </a>
-                                        <span class="service-price">$100</span>
-                                    </div>
-                                    <div class="cate-list">
-                                        <a class="bg-yellow" href="service-details.html">Cleaning</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="service-content">
-                                <h3 class="title">
-                                    <a href="service-details.html">House Cleaning Services</a>
-                                </h3>
-                                <div class="rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <span class="d-inline-block average-rating">(0)</span>
-                                </div>
-                                <div class="user-info">
-                                    <div class="row">
-                                        <span class="col-auto ser-contact"><i class="fas fa-phone mr-1"></i>
-                                            <span>xxxxxxxx91</span></span>
-                                        <span class="col ser-location"><span>Sylvester, Georgia</span> <i
-                                                class="fas fa-map-marker-alt ml-1"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="service-widget">
-                            <div class="service-img">
-                                <a href="service-details.html">
-                                    <img class="img-fluid serv-img" alt="Service Image"
-                                        src="{% static 'img/services/service-06.jpg' %}">
-                                </a>
-                                <div class="item-info">
-                                    <div class="service-user">
-                                        <a href="#">
-                                            <img src="{% static 'img/customer/user-06.jpg' %}" alt="">
-                                        </a>
-                                        <span class="service-price">$100</span>
-                                    </div>
-                                    <div class="cate-list">
-                                        <a class="bg-yellow" href="service-details.html">Computer</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="service-content">
-                                <h3 class="title">
-                                    <a href="service-details.html">Computer & Server AMC Service</a>
-                                </h3>
-                                <div class="rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <span class="d-inline-block average-rating">(0)</span>
-                                </div>
-                                <div class="user-info">
-                                    <div class="row">
-                                        <span class="col-auto ser-contact"><i class="fas fa-phone mr-1"></i>
-                                            <span>xxxxxxxx92</span></span>
-                                        <span class="col ser-location"><span>Los Angeles, California</span> <i
-                                                class="fas fa-map-marker-alt ml-1"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="service-widget">
-                            <div class="service-img">
-                                <a href="service-details.html">
-                                    <img class="img-fluid serv-img" alt="Service Image"
-                                        src="{% static 'img/services/service-07.jpg' %}">
-                                </a>
-                                <div class="item-info">
-                                    <div class="service-user">
-                                        <a href="#">
-                                            <img src="{% static 'img/customer/user-07.jpg' %}" alt="">
-                                        </a>
-                                        <span class="service-price">$5</span>
-                                    </div>
-                                    <div class="cate-list">
-                                        <a class="bg-yellow" href="service-details.html">Interior</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="service-content">
-                                <h3 class="title">
-                                    <a href="service-details.html">Interior Designing</a>
-                                </h3>
-                                <div class="rating">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star"></i>
-                                    <span class="d-inline-block average-rating">(4)</span>
-                                </div>
-                                <div class="user-info">
-                                    <div class="row">
-                                        <span class="col-auto ser-contact"><i class="fas fa-phone mr-1"></i>
-                                            <span>xxxxxxxx28</span></span>
-                                        <span class="col ser-location"><span>Hanover, Maryland</span> <i
-                                                class="fas fa-map-marker-alt ml-1"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="service-widget">
-                            <div class="service-img">
-                                <a href="service-details.html">
-                                    <img class="img-fluid serv-img" alt="Service Image"
-                                        src="{% static 'img/services/service-08.jpg' %}">
-                                </a>
-                                <div class="item-info">
-                                    <div class="service-user">
-                                        <a href="#">
-                                            <img src="{% static 'img/customer/user-08.jpg' %}" alt="">
-                                        </a>
-                                        <span class="service-price">$100</span>
-                                    </div>
-                                    <div class="cate-list">
-                                        <a class="bg-yellow" href="service-details.html">Construction</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="service-content">
-                                <h3 class="title">
-                                    <a href="service-details.html">Building Construction Services</a>
-                                </h3>
-                                <div class="rating">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star"></i>
-                                    <span class="d-inline-block average-rating">(4)</span>
-                                </div>
-                                <div class="user-info">
-                                    <div class="row">
-                                        <span class="col-auto ser-contact"><i class="fas fa-phone mr-1"></i>
-                                            <span>xxxxxxxx62</span></span>
-                                        <span class="col ser-location"><span>Burr Ridge, Illinois</span> <i
-                                                class="fas fa-map-marker-alt ml-1"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="service-widget">
-                            <div class="service-img">
-                                <a href="service-details.html">
-                                    <img class="img-fluid serv-img" alt="Service Image"
-                                        src="{% static 'img/services/service-09.jpg' %}">
-                                </a>
-                                <div class="item-info">
-                                    <div class="service-user">
-                                        <a href="#">
-                                            <img src="{% static 'img/customer/user-09.jpg' %}" alt="">
-                                        </a>
-                                        <span class="service-price">$500</span>
-                                    </div>
-                                    <div class="cate-list">
-                                        <a class="bg-yellow" href="service-details.html">Painting</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="service-content">
-                                <h3 class="title">
-                                    <a href="service-details.html">Commercial Painting Services</a>
-                                </h3>
-                                <div class="rating">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <span class="d-inline-block average-rating">(3)</span>
-                                </div>
-                                <div class="user-info">
-                                    <div class="row">
-                                        <span class="col-auto ser-contact"><i class="fas fa-phone mr-1"></i>
-                                            <span>xxxxxxxx75</span></span>
-                                        <span class="col ser-location"><span>Huntsville, Alabama</span> <i
-                                                class="fas fa-map-marker-alt ml-1"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="service-widget">
-                            <div class="service-img">
-                                <a href="service-details.html">
-                                    <img class="img-fluid serv-img" alt="Service Image"
-                                        src="{% static 'img/services/service-10.jpg' %}">
-                                </a>
-                                <div class="item-info">
-                                    <div class="service-user">
-                                        <a href="#">
-                                            <img src="{% static 'img/user.jpg' %}" alt="">
-                                        </a>
-                                        <span class="service-price">$150</span>
-                                    </div>
-                                    <div class="cate-list">
-                                        <a class="bg-yellow" href="service-details.html">Plumbing</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="service-content">
-                                <h3 class="title">
-                                    <a href="service-details.html">Plumbing Services</a>
-                                </h3>
-                                <div class="rating">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <span class="d-inline-block average-rating">(3)</span>
-                                </div>
-                                <div class="user-info">
-                                    <div class="row">
-                                        <span class="col-auto ser-contact"><i class="fas fa-phone mr-1"></i>
-                                            <span>xxxxxxxx13</span></span>
-                                        <span class="col ser-location"><span>Richmond, Virginia</span> <i
-                                                class="fas fa-map-marker-alt ml-1"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -453,13 +161,13 @@
                     <div class="card-body">
                         <h5 class="card-title">Service Availability</h5>
                         <ul>
-                            <li><span>Monday</span>9:30 AM - 7:00 PM</li>
-                            <li><span>Tuesday</span>9:30 AM - 7:00 PM</li>
-                            <li><span>Wednesday</span>9:30 AM - 7:00 PM</li>
-                            <li><span>Thursday</span>9:30 AM - 7:00 PM</li>
-                            <li><span>Friday</span>9:30 AM - 7:00 PM</li>
-                            <li><span>Saturday</span>9:30 AM - 7:00 PM</li>
-                            <li><span>Sunday</span>9:30 AM - 7:00 PM</li>
+                            <li><span>Monday</span>9 AM - 7:00 PM</li>
+                            <li><span>Tuesday</span>9 AM - 7:00 PM</li>
+                            <li><span>Wednesday</span>9 AM - 7:00 PM</li>
+                            <li><span>Thursday</span>9 AM - 7:00 PM</li>
+                            <li><span>Friday</span>9 AM - 7:00 PM</li>
+                            <li><span>Saturday</span>9 AM - 7:00 PM</li>
+                            <li><span>Sunday</span>9 AM - 7:00 PM</li>
                         </ul>
                     </div>
                 </div>

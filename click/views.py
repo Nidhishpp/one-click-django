@@ -7,31 +7,40 @@ from .models import *
 from django.db.models import Count
 
 # Test Functions
+
+
 def not_auth(user):
     return not user.is_authenticated
 
 
 # Create your views here.
 def index(request):
-    categories = category.objects.filter(featured=1).annotate(service_count=Count('service'))
+    categories = category.objects.filter(
+        featured=1).annotate(service_count=Count('service'))
     services = service.objects.filter(featured=1)
-    return render(request, 'index.html',{'categories':categories,'services':services})
+    return render(request, 'index.html', {'categories': categories, 'services': services})
 
 
 def categories(request):
     categories = category.objects.annotate(service_count=Count('service'))
-    return render(request, 'categories.html',{'categories':categories})
+    return render(request, 'categories.html', {'categories': categories})
 
 
-def services_page(request,id):
+def services_page(request, id):
     services = service.objects.filter(category=id)
     services_count = len(services)
-    return render(request, 'services.html',{'services':services,'services_count':services_count})
+    return render(request, 'services.html', {'services': services, 'services_count': services_count})
 
 
-def service_page(request,id):
+def service_page(request, id):
     serviceData = service.objects.get(id=id)
-    return render(request, 'service.html',{'service':serviceData})
+    relateds = service.objects.filter(
+        category=serviceData.category.id).exclude(id=serviceData.id)
+    return render(request, 'service.html', {'service': serviceData, 'relateds': relateds})
+
+    
+def book_service(request):
+    return render(request, 'book-service.html')
 
 
 @user_passes_test(not_auth, 'click:user-dashboard', redirect_field_name='')
@@ -61,6 +70,7 @@ def authLogin(request):
     else:
         return redirect('click:login')
 
+
 def authSignup(request):
     first_name = request.POST['first_name']
     last_name = request.POST['last_name']
@@ -78,6 +88,7 @@ def authSignup(request):
     else:
         return redirect('click:login')
 
+
 def authLogout(request):
     logout(request)
     return redirect('click:index')
@@ -93,15 +104,17 @@ def user(request):
 def userDashboard(request):
     return render(request, 'user-dashboard.html')
 
+
 @login_required(login_url='click:login', redirect_field_name='')
 def userBooking(request):
     return render(request, 'user-booking.html')
+
 
 @login_required(login_url='click:login', redirect_field_name='')
 def userProfile(request):
     return render(request, 'user-profile.html')
 
+
 @login_required(login_url='click:login', redirect_field_name='')
 def userReviews(request):
     return render(request, 'user-reviews.html')
-

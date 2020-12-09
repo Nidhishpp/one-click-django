@@ -12,6 +12,8 @@
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,400&amp;display=swap"
 		rel="stylesheet">
 
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/dot-luv/jquery-ui.css">
+
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="{% static 'plugins/bootstrap/css/bootstrap.min.css' %}">
 
@@ -22,6 +24,8 @@
 	<!-- Owl Carousel CSS -->
 	<link rel="stylesheet" href="{% static 'plugins/owlcarousel/owl.carousel.min.css' %}">
 	<link rel="stylesheet" href="{% static 'plugins/owlcarousel/owl.theme.default.min.css' %}">
+
+	<link rel="stylesheet" href="{% static 'css/jquery.datetimepicker.css' %}">
 
 	<!-- Main CSS -->
 	<link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -57,6 +61,9 @@
 	<!-- jQuery -->
 	<script src="{% static 'js/jquery-3.5.0.min.js' %}"></script>
 
+	<!-- jQuery UI --> 
+	{% comment %} <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script> {% endcomment %}
+
 	<!-- Bootstrap Core JS -->
 	<script src="{% static 'js/popper.min.js' %}"></script>
 	<script src="{% static 'plugins/bootstrap/js/bootstrap.min.js' %}"></script>
@@ -67,7 +74,8 @@
 
 	<!-- Datepicker Core JS -->
 	<script src="{% static 'js/moment.min.js' %}"></script>
-	<script src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
+	{% comment %} <script src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script> {% endcomment %}
+	<script src="{% static 'js/jquery.datetimepicker.full.min.js' %}"></script>
 
 	<!-- Owl JS -->
 	<script src="{% static 'plugins/owlcarousel/owl.carousel.min.js' %}"></script>
