@@ -52,15 +52,9 @@ def book_service(request,id):
         post.service=service_
         post.user=request.user
         post.save()
-        return render(request, 'book-service.html',{'service':service_})
-
-
-
-
+        return redirect('click:user-bookings')
     else:
-        print("ksjdfsdjfsfjksdfsjdkfsdfnnnnnnnnnnnnnnnnnnnnn",id)
         service_=service.objects.get(id=id)
-        print("ksjdfsdjfsfjksdfsjdkfsdfnnnnnnnnnnnnnnnnnnnnn",service_)
         return render(request, 'book-service.html',{'service':service_})
 
 
