@@ -1,0 +1,128 @@
+{% extends "layouts/layout.html" %}
+
+{% block title %}User Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="content">
+    <div class="container">
+        <div class="row">
+            {% include 'includes/staff-dashboard-sidebar.html' %}
+            <div class="col-xl-9 col-md-8">
+                <form>
+                    <div class="widget">
+                        <h4 class="widget-title">Profile Settings</h4>
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <h5 class="form-title">Basic Information</h5>
+                            </div>
+                            <div class="form-group col-xl-12">
+                                <div class="media align-items-center mb-3">
+                                    <img class="user-image" src="assets/img/provider/provider-01.jpg" alt="">
+                                    <div class="media-body">
+                                        <h5 class="mb-0">Thomas Herzberg</h5>
+                                        <p>Max file size is 20mb</p>
+                                        <div class="jstinput">
+                                            <a href="javascript:void(0);" class="browsephoto">Browse</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xl-6">
+                            <label class="mr-sm-2">Name</label>
+                            <input class="form-control" type="text" value="Thomas Herzberg" readonly>
+                        </div>
+                        <div class="form-group col-xl-6">
+                            <label class="mr-sm-2">Email</label>
+                            <input class="form-control" type="email" value="truelysell@example.com" readonly>
+                        </div>
+                        <div class="form-group col-xl-6">
+                            <label class="mr-sm-2">Country Code</label>
+                            <input class="form-control" type="text" value="+1" readonly>
+                        </div>
+                        <div class="form-group col-xl-6">
+                            <label class="mr-sm-2">Mobile Number</label>
+                            <input class="form-control no_only" type="text" value="412-355-7471" readonly required>
+                        </div>
+                        <div class="form-group col-xl-6">
+                            <label class="mr-sm-2">Date of birth</label>
+                            <input type="text" class="form-control provider_datepicker" autocomplete="off"
+                                value="17-01-1996">
+                        </div>
+                        <div class="col-xl-12">
+                            <h5 class="form-title">Service Info</h5>
+                        </div>
+                        <div class="form-group col-xl-6">
+                            <label class="mr-sm-2">What Service do you Provide?</label>
+                            <select class="form-control select provider_category" title="Category">
+                                <option>Automobile</option>
+                                <option>Construction</option>
+                                <option>Interior</option>
+                                <option>Cleaning</option>
+                                <option>Electrical</option>
+                                <option>Carpentry</option>
+                                <option>Computer</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-xl-6">
+                            <label class="mr-sm-2">Sub Category</label>
+                            <select class="form-control select provider_subcategory" title="Sub Category">
+                                <option>House Cleaning</option>
+                                <option>Full Car Wash</option>
+                                <option>Roofing</option>
+                                <option>Indoor Glass</option>
+                                <option>Convertible Fridge</option>
+                                <option>Fridge</option>
+                                <option>Car Wash</option>
+                                <option>Others</option>
+                            </select>
+                        </div>
+                        <div class="col-xl-12">
+                            <h5 class="form-title">Address</h5>
+                        </div>
+                        <div class="form-group col-xl-12">
+                            <label class="mr-sm-2">Address</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="form-group col-xl-6">
+                            <label class="mr-sm-2">Country</label>
+                            <select class="form-control">
+                                <option>Select Country</option>
+                                <option>Australia (+61)</option>
+                                <option>France (+33)</option>
+                                <option>Germany (+49)</option>
+                                <option>Iceland (+354)</option>
+                                <option>India (+91)</option>
+                                <option>Romania (+40)</option>
+                                <option>Russia (+7)</option>
+                                <option>Spain (+34)</option>
+                                <option>UK (+44)</option>
+                                <option selected>USA (+1)</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-xl-6">
+                            <label class="mr-sm-2">State</label>
+                            <select class="form-control"></select>
+                        </div>
+                        <div class="form-group col-xl-6">
+                            <label class="mr-sm-2">City</label>
+                            <select class="form-control"></select>
+                        </div>
+                        <div class="form-group col-xl-6">
+                            <label class="mr-sm-2">Postal Code</label>
+                            <input type="text" class="form-control" value="654587">
+                        </div>
+                        <div class="form-group col-xl-12">
+                            <button class="btn btn-primary pl-5 pr-5" type="submit">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
