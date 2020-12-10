@@ -73,11 +73,19 @@
                 <li class="has-submenu">
                     <a href="javascript:void(0);">Welcome {{ user.first_name }} <i class="fas fa-chevron-down"></i></a>
                     <ul class="submenu">
+                        {% if user.is_staff %}
+                        <li><a href="{% url 'click:staff-dashboard' %}">Dashboard</a></li>
+                        <li><a href="{% url 'click:staff-bookings' %}">Bookings</a></li>
+                        <li><a href="{% url 'click:staff-profile' %}">Profile Settings</a></li>
+                        <li><a href="{% url 'click:auth-logout' %}">Logout</a></li>
+                        {% else %}
+
                         <li><a href="{% url 'click:user-dashboard' %}">Dashboard</a></li>
                         <li><a href="{% url 'click:user-bookings' %}">Bookings</a></li>
                         <li><a href="{% url 'click:user-profile' %}">Profile Settings</a></li>
                         <li><a href="{% url 'click:user-reviews' %}">Reviews</a></li>
                         <li><a href="{% url 'click:auth-logout' %}">Logout</a></li>
+                        {% endif %}
                     </ul>
                 </li>
                 {% else %}

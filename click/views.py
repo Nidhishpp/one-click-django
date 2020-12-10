@@ -12,6 +12,9 @@ from django.db.models import Count
 def not_auth(user):
     return not user.is_authenticated
 
+def is_staff(user):
+    return user.is_staff
+
 
 # Create your views here.
 def index(request):
@@ -38,7 +41,7 @@ def service_page(request, id):
         category=serviceData.category.id).exclude(id=serviceData.id)
     return render(request, 'service.html', {'service': serviceData, 'relateds': relateds})
 
-    
+
 def book_service(request):
     return render(request, 'book-service.html')
 
@@ -102,19 +105,40 @@ def user(request):
 
 @login_required(login_url='click:login', redirect_field_name='')
 def userDashboard(request):
-    return render(request, 'user-dashboard.html')
+    return render(request, 'user/user-dashboard.html')
 
 
 @login_required(login_url='click:login', redirect_field_name='')
 def userBooking(request):
-    return render(request, 'user-booking.html')
+    return render(request, 'user/user-booking.html')
 
 
 @login_required(login_url='click:login', redirect_field_name='')
 def userProfile(request):
-    return render(request, 'user-profile.html')
+    return render(request, 'user/user-profile.html')
 
 
 @login_required(login_url='click:login', redirect_field_name='')
 def userReviews(request):
-    return render(request, 'user-reviews.html')
+    return render(request, 'user/user-reviews.html')
+
+
+# Staff Routes
+@login_required(login_url='click:login', redirect_field_name='')
+def staff(request):
+    return redirect('click:staff-dashboard')
+
+
+@login_required(login_url='click:login', redirect_field_name='')
+def staffDashboard(request):
+    return render(request, 'staff/staff-dashboard.html')
+
+
+@login_required(login_url='click:login', redirect_field_name='')
+def staffBooking(request):
+    return render(request, 'staff/staff-booking.html')
+
+
+@login_required(login_url='click:login', redirect_field_name='')
+def staffProfile(request):
+    return render(request, 'staff/staff-profile.html')

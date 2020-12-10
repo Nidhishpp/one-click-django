@@ -22,4 +22,8 @@ urlpatterns = [
     path('user/bookings', views.userBooking, name='user-bookings'),
     path('user/profile', views.userProfile, name='user-profile'),
     path('user/reviews', views.userReviews, name='user-reviews'),
+    path('staff/', views.staff, name='staff'),
+    path('staff/dashboard', views.staffDashboard, name='staff-dashboard'),
+    path('staff/bookings', views.staffBooking, name='staff-bookings'),
+    path('staff/profile', views.staffProfile, name='staff-profile'),
 ]
