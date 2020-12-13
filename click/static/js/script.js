@@ -1,6 +1,6 @@
 /*
 Author       : Dreamguys
-Template Name: Truelysell - Service Marketplace
+Template Name: OneClick - Service Marketplace
 Version      : 1.0
 */
 
