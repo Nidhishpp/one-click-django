@@ -12,5 +12,8 @@ def hasAttribute(value,arg):
 
 @register.filter(name='times')
 def times(number):
-    number = round(number)
-    return range(number)
+    if number is None : 
+        return []
+    else :
+        number = round(number)
+        return range(number)
