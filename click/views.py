@@ -12,6 +12,7 @@ from django.db.models import Count
 def not_auth(user):
     return not user.is_authenticated
 
+
 def is_staff(user):
     return user.is_staff
 
@@ -41,25 +42,24 @@ def service_page(request, id):
         category=serviceData.category.id).exclude(id=serviceData.id)
     return render(request, 'service.html', {'service': serviceData, 'relateds': relateds})
 
-    
-def book_service(request,id):
 
-    if request.method=='POST':
-        service_=service.objects.get(id=id)
+def book_service(request, id):
 
-        post=booking()
-        post.date=request.POST.get('date')
-        post.time=request.POST.get('time')
-        post.location=request.POST.get('location')
-        post.phn=request.POST.get('phone')
-        post.service=service_
-        post.user=request.user
+    if request.method == 'POST':
+        service_ = service.objects.get(id=id)
+
+        post = booking()
+        post.date = request.POST.get('date')
+        post.time = request.POST.get('time')
+        post.location = request.POST.get('location')
+        post.phn = request.POST.get('phone')
+        post.service = service_
+        post.user = request.user
         post.save()
         return redirect('click:user-bookings')
     else:
-        service_=service.objects.get(id=id)
-        return render(request, 'book-service.html',{'service':service_})
-
+        service_ = service.objects.get(id=id)
+        return render(request, 'book-service.html', {'service': service_})
 
 
 @user_passes_test(not_auth, 'click:user-dashboard', redirect_field_name='')
@@ -101,12 +101,28 @@ def authSignup(request):
     user.first_name = first_name
     user.last_name = last_name
     user.save()
+    profil = profile()
+    profil.dob = request.POST['date_of_birth']
+    profil.mobile = request.POST['mob']
+    profil.user = user
+    profil.save()
     if user:
         login(request, user)
         return redirect('click:index')
     else:
         return redirect('click:login')
 
+def update_dp(request):
+    pro=profile.objects.get(id=request.user.profile.id)
+    print(pro)
+    pro.image=request.FILES.get('img')
+    print("poroooooooooooooooooooooooooooooooooooooooo",request.FILES.get('img'))
+    pro.save()
+    if request.user.is_staff :
+        return redirect('click:staff-profile')
+    else :
+        return redirect('click:user-profile')
+        
 
 def authLogout(request):
     logout(request)
@@ -126,7 +142,8 @@ def userDashboard(request):
 
 @login_required(login_url='click:login', redirect_field_name='')
 def userBooking(request):
-    return render(request, 'user/user-booking.html')
+    bookings = booking.objects.filter(user=request.user)
+    return render(request, 'user/user-booking.html', {'bookings': bookings})
 
 
 @login_required(login_url='click:login', redirect_field_name='')
@@ -152,9 +169,13 @@ def staffDashboard(request):
 
 @login_required(login_url='click:login', redirect_field_name='')
 def staffBooking(request):
-    return render(request, 'staff/staff-booking.html')
+    bookings = booking.objects.filter(staff=request.user)
+    return render(request, 'staff/staff-booking.html', {'bookings': bookings})
 
 
 @login_required(login_url='click:login', redirect_field_name='')
 def staffProfile(request):
+    # prof=profile.objects.get(user=request.user.id)
+    # usr=User.objects.get(id=request.user.id)
+
     return render(request, 'staff/staff-profile.html')

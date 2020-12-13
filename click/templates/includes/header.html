@@ -33,7 +33,7 @@
                 <li>
                     <a href="{% url 'click:categories' %}">Categories</a>
                 </li>
-                <li class="has-submenu">
+                {% comment %} <li class="has-submenu">
                     <a href="provider-dashboard.html">Providers</a>
                     <ul class="submenu">
                         <li><a href="provider-dashboard.html">Dashboard</a></li>
@@ -46,7 +46,7 @@
                         <li><a href="provider-reviews.html">Reviews</a></li>
                         <li><a href="provider-payment.html">Payment</a></li>
                     </ul>
-                </li>
+                </li> {% endcomment %}
                 {% comment %} <li class="has-submenu">
                     <a href="#">Pages <i class="fas fa-chevron-down"></i></a>
                     <ul class="submenu">
@@ -63,9 +63,9 @@
                         <li><a href="#">Privacy Policy</a></li>
                     </ul>
                 </li> {% endcomment %}
-                <li>
+                {% comment %} <li>
                     <a href="admin/index.html" target="_blank">Admin</a>
-                </li>
+                </li> {% endcomment %}
                 <li>
                     <a href="{% url 'click:contact' %}">Contact</a>
                 </li>

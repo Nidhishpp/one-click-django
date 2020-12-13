@@ -26,4 +26,6 @@ urlpatterns = [
     path('staff/dashboard', views.staffDashboard, name='staff-dashboard'),
     path('staff/bookings', views.staffBooking, name='staff-bookings'),
     path('staff/profile', views.staffProfile, name='staff-profile'),
+    path('dpupdate', views.update_dp, name='dpupdate'),
+    
 ]

@@ -45,6 +45,7 @@ class booking(models.Model):
     service = models.ForeignKey(service, on_delete=models.CASCADE)
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='user')
+    reason= models.TextField(default='null')
 
 
 class comments(models.Model):
@@ -57,3 +58,11 @@ class comments(models.Model):
 
     class Meta:
         verbose_name = "Review"
+
+class profile(models.Model):
+    image = models.ImageField(upload_to='profile', default='profile/profile.png')
+    mobile = models.BigIntegerField(verbose_name="Phone Number")
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    dob=models.DateField(default=now,blank=True, null=True)
+    
+

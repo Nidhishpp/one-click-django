@@ -31,7 +31,7 @@
 <div class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-3 theiaStickySidebar">
+            {% comment %} <div class="col-lg-3 theiaStickySidebar">
                 <div class="card filter-card">
                     <div class="card-body">
                         <h4 class="card-title mb-4">Search Filter</h4>
@@ -72,8 +72,8 @@
                         </form>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-9">
+            </div> {% endcomment %}
+            <div class="col-lg-12">
                 <div class="row align-items-center mb-4">
                     <div class="col-md-6 col">
                         <h4><span>{{services_count}}</span> Services</h4>
@@ -87,7 +87,7 @@
                 <div>
                     <div class="row">
                     {% for service in services %}
-                        <div class="col-lg-4 col-md-6">
+                        <div class="col-lg-3 col-md-4">
                             <div class="service-widget">
                                 <div class="service-img">
                                     <a href="{% url 'click:service' id=service.id %}">
@@ -95,7 +95,9 @@
                                             src="{{service.image.url}}">
                                     </a>
                                     <div class="item-info">
-                                       
+                                        <div class="service-user">
+                                            <span class="service-price">₹{{service.price}}</span>	
+                                        </div>
                                         <div class="cate-list">
                                             <a class="bg-yellow" href="{% url 'click:service' id=service.id %}">{{service.category.title}}</a>
                                         </div>

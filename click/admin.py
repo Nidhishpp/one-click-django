@@ -30,5 +30,6 @@ class adminBooking(admin.ModelAdmin):
 admin.site.register(service,adminService)
 admin.site.register(category,adminCategory)
 admin.site.register(comments)
+admin.site.register(profile)
 admin.site.register(booking,adminBooking)
 

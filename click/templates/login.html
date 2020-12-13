@@ -94,7 +94,14 @@
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
                                     <label class="focus-label">Mobile Number</label>
-                                    <input type="text" name="mobile" class="form-control" placeholder="986 452 1236" required>
+                                    <input type="text" name="mob" class="form-control" placeholder="986 452 1236" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group form-focus">
+                                    <label class="focus-label">DOB</label>
+                                    <input class="form-control datepicker " type="text" name="date_of_birth">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -114,4 +121,13 @@
 {% endblock content %}
 
 {% block script %}
+<script>
+    $(function () {
+        $(".datepicker").datetimepicker({
+            timepicker: false,
+            format: 'Y-m-d',
+            minDate: +2,
+        });
+    });
+</script>
 {% endblock script %}
