@@ -58,6 +58,7 @@
                         </div>
 
                         <div class="booking-action">
+<<<<<<< HEAD
                             {% comment %} <a href="user-chat.html" class="btn btn-sm bg-info-light"><i
                                     class="far fa-eye"></i>
                                 Chat</a> {% endcomment %}
@@ -66,6 +67,12 @@
 
                             <button type="button" data-reason="{{booking.reason}}" data-toggle="modal"
                                 data-target="#myReason" class="btn btn-sm bg-default-light"><i
+=======
+                            <a href="javascript:;" class="btn btn-sm bg-danger-light" data-toggle="modal"
+                                data-target="#myCancel"><i class="fas fa-times"></i> Cancel the Service</a>
+
+                            <button type="button" data-id="542" class="btn btn-sm bg-default-light"><i
+>>>>>>> origin/sanoop
                                     class="fas fa-info-circle"></i> Reason</button>
 
                             {% elif booking.status == "Pending" or booking.status == "Staff assigned" %}
