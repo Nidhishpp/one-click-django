@@ -1,5 +1,7 @@
 {% extends "layouts/layout.html" %}
 
+{% load extra_tags %}
+
 {% block title %}User Dashboard{% endblock %}
 
 {% block content %}
@@ -32,12 +34,12 @@
                     <div class="bookings">
                         <div class="booking-list">
                             <div class="booking-widget">
-                                <a href="service-details.html" class="booking-img">
+                                <a href="{% url 'click:service' id=booking.service.id %}" class="booking-img">
                                     <img src="{{ booking.service.image.url }} " alt="{{ booking.service.title }}">
                                 </a>
                                 <div class="booking-det-info">
                                     <h3>
-                                        <a href="service-details.html">{{ booking.service.title }}</a>
+                                        <a href="{% url 'click:service' id=booking.service.id %}">{{ booking.service.title }}</a>
                                     </h3>
                                     <ul class="booking-details">
                                         <li>
@@ -49,21 +51,26 @@
                                         <li><span>Phone</span> {{ booking.phn }}</li>
                                         <li><span>User</span> {{ booking.user.first_name }}</li>
                                         <li><span>Booking Date</span> {{ booking.booking_date }}</li>
-                                        <li><span>Status</span><span class="badge badge-pill badge-prof bg-success"> {{ booking.status }}</span></li>
+                                        <li><span>Status</span><span class="badge badge-pill badge-prof bg-success">
+                                                {{ booking.status }}</span></li>
                                     </ul>
                                 </div>
                             </div>
 
                             <div class="booking-action">
-                                <a href="user-chat.html" class="btn btn-sm bg-info-light"><i class="far fa-eye"></i>
-                                    Chat</a>
-                                <a href="javascript:;" class="btn btn-sm bg-danger-light" data-toggle="modal"
-                                    data-target="#myCancel"><i class="fas fa-times"></i> Cancel the Service</a>
-                                <a href="javascript:;" class="btn btn-sm bg-success-light"><i class="fas fa-check"></i>
-                                    Complete Request to user</a>
-                                    
-                                <button type="button" data-id="542" class="btn btn-sm bg-default-light"><i
+                                {% if booking.status == "Canceled" %}
+
+                                <button type="button" data-reason="{{booking.reason}}" data-toggle="modal"
+                                    data-target="#myReason" class="btn btn-sm bg-default-light"><i
                                         class="fas fa-info-circle"></i> Reason</button>
+
+                                {% elif booking.status == "Pending" or booking.status == "Staff assigned" %}
+
+                                <button type="button" data-id="{{booking.id}}" class="btn btn-sm bg-danger-light"
+                                    data-toggle="modal" data-target="#myCancel"><i class="fas fa-times"></i> Cancel the
+                                    Service</button>
+
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -93,4 +100,70 @@
     </div>
 </div>
 
+<!-- Reason Modal -->
+<div class="modal fade" id="myReason" tabindex="-1" role="dialog" aria-labelledby="Reason" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myReasonTitle">Reason</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cancel Modal -->
+<div class="modal fade" id="myCancel" tabindex="-1" role="dialog" aria-labelledby="Cancel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myCancelLabel">Cancel</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="{% url 'click:booking_status' %}">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <input type="hidden" name="booking_id" id="booking_id">
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Reason:</label>
+                        <textarea class="form-control" id="message-text" name="reason">Canceled by Staff : </textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock content %}
+
+{% block script %}
+<script>
+    $('#myReason').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var reason = button.data('reason')
+        var modal = $(this)
+        modal.find('.modal-body').html(reason)
+    })
+
+
+    $('#myCancel').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var id = button.data('id')
+        var modal = $(this)
+        modal.find('.modal-body #booking_id').val(id)
+    })
+</script>
+{% endblock script %}

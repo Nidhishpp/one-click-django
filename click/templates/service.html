@@ -17,12 +17,10 @@
                             Maryland
                         </address> {% endcomment %}
                         <div class="rating">
+                            {% for i in service.avg_rating|times %}
                             <i class="fas fa-star filled"></i>
-                            <i class="fas fa-star filled"></i>
-                            <i class="fas fa-star filled"></i>
-                            <i class="fas fa-star filled"></i>
-                            <i class="fas fa-star filled"></i>
-                            <span class="d-inline-block average-rating">(5)</span>
+                            {% endfor %}
+                            {% comment %} <span class="d-inline-block average-rating">({{ service.avg_rating}})</span> {% endcomment %}
                         </div>
                         <div class="service-cate">
                             {{ service.category.title }}
@@ -84,27 +82,32 @@
                             <div class="tab-pane fade" id="pills-book" role="tabpanel" aria-labelledby="pills-book-tab">
                                 <div class="card review-box">
                                     <div class="card-body">
+                                        {% for review in reviews %}
                                         <div class="review-list">
                                             <div class="review-img">
-                                                <img class="rounded-circle"
-                                                    src="{% static 'img/customer/user-01.jpg' %}" alt="">
+                                                <img class="rounded img-fluid" src="{{review.user.profile.image.url}} "
+                                                    alt="{{review.user.first_name}}">
                                             </div>
                                             <div class="review-info">
-                                                <h5>Jeffrey Akridge</h5>
-                                                <div class="review-date">August 06, 2020 20:07 pm</div>
-                                                <p class="mb-0">Good Work</p>
+                                                <h5><a href="{% url 'click:service' id=review.service.id %}">{{review.user.first_name}}
+                                                        {{review.user.last_name}}</a>
+                                                </h5>
+                                                <div class="review-date">{{review.created_at|date:'M d, Y'}}</div>
+                                                <p class="mb-2">{{review.comment}}</p>
                                             </div>
                                             <div class="review-count">
                                                 <div class="rating">
+                                                    {% for i in review.rating|times %}
                                                     <i class="fas fa-star filled"></i>
-                                                    <i class="fas fa-star filled"></i>
-                                                    <i class="fas fa-star filled"></i>
-                                                    <i class="fas fa-star filled"></i>
-                                                    <i class="fas fa-star filled"></i>
-                                                    <span class="d-inline-block average-rating">(5.0)</span>
+                                                    {% endfor %}
+                                                    {% comment %} <i class="fas fa-star"></i> {% endcomment %}
+                                                    {% comment %} <span
+                                                        class="d-inline-block average-rating">({{review.rating}})</span>
+                                                    {% endcomment %}
                                                 </div>
                                             </div>
                                         </div>
+                                        {% endfor %}
                                     </div>
                                 </div>
                             </div>

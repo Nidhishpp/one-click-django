@@ -4,7 +4,7 @@
             <img alt="profile image" src="{{user.profile.image.url}}" class="avatar-lg rounded-circle">
             <div class="ml-sm-3 ml-md-0 ml-lg-3 mt-2 mt-sm-0 mt-md-2 mt-lg-0">
                 <h6 class="mb-0">{{ user.first_name }} {{ user.last_name }}</h6>
-                <p class="text-muted mb-0">Member Since {{ user.date_joined }}</p>
+                <p class="text-muted mb-0">Member Since <br/>{{ user.date_joined|date:'M d, Y'}}</p>
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@
             </li>
             <li class="nav-item">
                 <a href="{% url 'click:staff-profile' %}" class="nav-link">
-                    <i class="far fa-user"></i> <span>Profile Settings</span>
+                    <i class="far fa-user"></i> <span>Profile</span>
                 </a>
             </li>
         </ul>

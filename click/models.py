@@ -39,13 +39,13 @@ class booking(models.Model):
     location = models.TextField()
     phn = models.BigIntegerField(verbose_name="Phone Number")
     staff = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='staff', null=True)
+        User, on_delete=models.CASCADE, related_name='staff', null=True, blank=True)
     status = models.CharField(max_length=256, default='Pending', choices=[('Pending', 'Pending'), (
         'Staff assigned', 'Staff assigned'), ('In progress', 'In progress'), ('Completed', 'Completed'), ('Canceled', 'Canceled')])
     service = models.ForeignKey(service, on_delete=models.CASCADE)
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='user')
-    reason= models.TextField(default='null')
+    reason= models.TextField(null=True,blank=True)
 
 
 class comments(models.Model):
@@ -53,7 +53,7 @@ class comments(models.Model):
     rating = models.IntegerField(default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     service = models.ForeignKey(service, on_delete=models.CASCADE)
-    booking = models.ForeignKey(booking, on_delete=models.CASCADE)
+    booking = models.OneToOneField(booking, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

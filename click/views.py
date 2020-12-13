@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
+from django.db.models.aggregates import Avg
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from .models import *
@@ -37,10 +38,11 @@ def services_page(request, id):
 
 
 def service_page(request, id):
-    serviceData = service.objects.get(id=id)
+    serviceData = service.objects.annotate(avg_rating=Avg('comments__rating')).get(id=id)
+    reviews = comments.objects.filter(service=serviceData.id)
     relateds = service.objects.filter(
         category=serviceData.category.id).exclude(id=serviceData.id)
-    return render(request, 'service.html', {'service': serviceData, 'relateds': relateds})
+    return render(request, 'service.html', {'service': serviceData, 'reviews': reviews, 'relateds': relateds})
 
 
 def book_service(request, id):
@@ -60,6 +62,30 @@ def book_service(request, id):
     else:
         service_ = service.objects.get(id=id)
         return render(request, 'book-service.html', {'service': service_})
+
+def booking_status(request):
+
+        book = booking.objects.get(id=request.POST.get('booking_id'))
+        book.reason = request.POST.get('reason')
+        book.status = 'Canceled'
+        book.save()
+        if request.user.is_staff :
+            return redirect('click:staff-bookings')
+        else :
+            return redirect('click:user-bookings')
+
+
+def booking_comment(request):
+        book = booking.objects.get(id=request.POST.get('booking_id'))
+        serv = service.objects.get(id=request.POST.get('service_id'))
+        comm = comments()
+        comm.comment = request.POST.get('comment')
+        comm.rating = request.POST.get('rate')
+        comm.service = serv
+        comm.booking = book
+        comm.user = request.user
+        comm.save()
+        return redirect('click:user-bookings')
 
 
 @user_passes_test(not_auth, 'click:user-dashboard', redirect_field_name='')
@@ -114,9 +140,7 @@ def authSignup(request):
 
 def update_dp(request):
     pro=profile.objects.get(id=request.user.profile.id)
-    print(pro)
     pro.image=request.FILES.get('img')
-    print("poroooooooooooooooooooooooooooooooooooooooo",request.FILES.get('img'))
     pro.save()
     if request.user.is_staff :
         return redirect('click:staff-profile')
@@ -153,7 +177,8 @@ def userProfile(request):
 
 @login_required(login_url='click:login', redirect_field_name='')
 def userReviews(request):
-    return render(request, 'user/user-reviews.html')
+    reviews = comments.objects.filter(user=request.user)
+    return render(request, 'user/user-reviews.html', {'reviews': reviews})
 
 
 # Staff Routes
@@ -175,7 +200,4 @@ def staffBooking(request):
 
 @login_required(login_url='click:login', redirect_field_name='')
 def staffProfile(request):
-    # prof=profile.objects.get(user=request.user.id)
-    # usr=User.objects.get(id=request.user.id)
-
     return render(request, 'staff/staff-profile.html')
