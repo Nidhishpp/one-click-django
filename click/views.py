@@ -37,6 +37,7 @@ def services_page(request, id):
 
 
 def service_page(request, id):
+   
     serviceData = service.objects.get(id=id)
     relateds = service.objects.filter(
         category=serviceData.category.id).exclude(id=serviceData.id)
@@ -44,10 +45,16 @@ def service_page(request, id):
 
 
 def book_service(request, id):
-
-    if request.method == 'POST':
+        if request.user.is_anonymous:
+            return redirect('click:login')
         service_ = service.objects.get(id=id)
+        return render(request, 'book-service.html', {'service': service_})
 
+def book_service_insert(request, id):
+
+     if request.method == 'POST':
+        service_ = service.objects.get(id=id)
+       
         post = booking()
         post.date = request.POST.get('date')
         post.time = request.POST.get('time')
@@ -57,10 +64,6 @@ def book_service(request, id):
         post.user = request.user
         post.save()
         return redirect('click:user-bookings')
-    else:
-        service_ = service.objects.get(id=id)
-        return render(request, 'book-service.html', {'service': service_})
-
 
 @user_passes_test(not_auth, 'click:user-dashboard', redirect_field_name='')
 def loginView(request):

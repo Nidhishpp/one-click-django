@@ -13,7 +13,7 @@
                 <div class="section-header text-center">
                     <h2>Book Service</h2>
                 </div>
-                <form action="/book-service/{{service.id}}" method="POST" >{% csrf_token %}
+                <form action="/book_service_insert/{{service.id}}" method="POST" >{% csrf_token %}
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
@@ -68,7 +68,7 @@
                        
                     </div>
                     <div class="submit-section">
-                        <button class="btn btn-primary submit-btn" type="submit">Book Booking</button>
+                        <button class="btn btn-primary submit-btn" type="submit">Book Service</button>
                     </div>
                 </form>
             </div>
