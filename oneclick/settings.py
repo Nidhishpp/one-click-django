@@ -32,10 +32,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'click.apps.ClickConfig',
-    # 'admin.apps.AdminConfig',
     'django.contrib.admin',
     'django.contrib.auth',
+    'click.apps.ClickConfig',
+    'payments.apps.PaymentsConfig',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -133,3 +133,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+
+# Payment
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51Hyu6qErdQGuhr1YGAhIUAYW1M3OcHUJd0ac8qlO30cS9VS6Zg5IrV5pLMDxmHZaMhCXaT50P35bQ54C96L0I28b00WChL4hB2'
+STRIPE_SECRET_KEY = 'sk_test_51Hyu6qErdQGuhr1YFjjawZMXjw8XAotGKPZP2Zfjqcg99eQU5ZRZ7pZEOFBxZEWYknkxnp9es5N6Dc28BkxzLxHX00XMHQvXwS'

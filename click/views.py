@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
@@ -7,6 +8,7 @@ from django.shortcuts import redirect, render
 from .models import *
 from django.db.models import Count
 from django.contrib import messages
+import stripe
 
 # Test Functions
 
@@ -55,21 +57,46 @@ def book_service(request, id):
 
 
 def book_service_insert(request, id):
-    if request.POST.get('card_no') != '4111111111111111' and request.POST.get('cvv') != '111':
-        messages.error(request, 'Payment Error')
-        return redirect('/book-service/'+str(id))
-
-    service_ = service.objects.get(id=id)
+    serviceData = service.objects.get(id=id)
     post = booking()
     post.date = request.POST.get('date')
     post.time = request.POST.get('time')
     post.location = request.POST.get('location')
     post.phn = request.POST.get('phone')
-    post.service = service_
+    post.service = serviceData
     post.user = request.user
     post.save()
-    messages.success(request, 'Booking Success')
-    return redirect('click:user-bookings')
+    # messages.success(request, 'Booking Success')
+
+    domain_url = 'http://localhost:8000/payment/'
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            # new
+            client_reference_id=request.user.id if request.user.is_authenticated else None,
+            success_url=domain_url + \
+            'success?session_id={CHECKOUT_SESSION_ID}',
+            cancel_url=domain_url + 'cancelled/',
+            payment_method_types=['card'],
+            mode='payment',
+            line_items=[
+                {
+                    'name': serviceData.title,
+                    'quantity': 1,
+                    'currency': 'inr',
+                    'amount': str(serviceData.price) +'00',
+                }
+            ]
+        )
+        post.payment_id = checkout_session['payment_intent']
+        post.save()
+        request.session['checkout_session'] = checkout_session['id']
+        # return JsonResponse({'sessionId': checkout_session['id']})
+        return redirect('payments:payments')
+    except Exception as e:
+        print(str(e))
+        # return JsonResponse({'error': str(e)})
+        return redirect('/payment/cancelled/')
 
 
 def cancel_booking(request):
@@ -165,8 +192,6 @@ def authSignup(request):
         return redirect('click:login')
 
 
-
-
 def update_dp(request):
     pro = profile.objects.get(id=request.user.profile.id)
     pro.image = request.FILES.get('img')
@@ -195,7 +220,7 @@ def userDashboard(request):
 
 @login_required(login_url='click:login', redirect_field_name='')
 def userBooking(request):
-    bookings = booking.objects.filter(user=request.user)
+    bookings = booking.objects.filter(user=request.user).order_by('-id')
     return render(request, 'user/user-booking.html', {'bookings': bookings})
 
 
@@ -223,7 +248,7 @@ def staffDashboard(request):
 
 @login_required(login_url='click:login', redirect_field_name='')
 def staffBooking(request):
-    bookings = booking.objects.filter(staff=request.user)
+    bookings = booking.objects.filter(staff=request.user).order_by('-id')
     return render(request, 'staff/staff-booking.html', {'bookings': bookings})
 
 

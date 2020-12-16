@@ -141,7 +141,7 @@
             <form method="post" action="{% url 'click:cancel_booking' %}">
                 {% csrf_token %}
                 <div class="modal-body">
-                    <input type="hidden" name="booking_id" id="booking_id">
+                    <input type="hidden" name="booking_id" class="booking_id">
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">Reason:</label>
                         <textarea class="form-control" id="message-text" name="reason">Canceled by Staff : </textarea>
@@ -169,8 +169,8 @@
             <form method="post" action="{% url 'click:booking_status' %}">
                 {% csrf_token %}
                 <div class="modal-body">
-                    <input type="hidden" name="booking_id" id="booking_id">
-                    <input type="hidden" name="status" id="status">
+                    <input type="hidden" name="booking_id" class="booking_id">
+                    <input type="hidden" name="status" class="status">
                     <p class="question"></p>
                 </div>
                 <div class="modal-footer">
@@ -197,7 +197,7 @@
         var button = $(event.relatedTarget)
         var id = button.data('id')
         var modal = $(this)
-        modal.find('.modal-body #booking_id').val(id)
+        modal.find('.modal-body .booking_id').val(id)
     })
 
     $('#myStatus').on('show.bs.modal', function (event) {
@@ -206,8 +206,8 @@
         var status = button.data('status')
         var question = button.data('question')
         var modal = $(this)
-        modal.find('.modal-body #booking_id').val(id)
-        modal.find('.modal-body #status').val(status)
+        modal.find('.modal-body .booking_id').val(id)
+        modal.find('.modal-body .status').val(status)
         modal.find('.modal-body .question').html(question)
     })
 </script>

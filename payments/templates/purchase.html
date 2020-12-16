@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Django + Stripe Checkout</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
+    <script src="https://js.stripe.com/v3/"></script>
+    {% comment %} <script src="{% static 'js/payment.js' %}"></script> <!-- new --> {% endcomment %}
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+
+<body>
+    <section class="hero is-fullheight">
+        <div class="hero-body has-text-centered">
+            <div class="container">
+                {% comment %} <img src="{% static 'img/payment/error.gif' %}" alt=""> {% endcomment %}
+                <h2 class="subtitle">
+                    Redirecting to Payment.....
+                </h2>
+            </div>
+        </div>
+    </section>
+</body>
+
+<script>
+fetch("/payment/config/")
+    .then((result) => {
+        return result.json();
+    })
+    .then((data) => {
+        // Initialize Stripe.js
+        const stripe = Stripe(data.publicKey);
+        return stripe.redirectToCheckout({
+            sessionId: '{{ request.session.checkout_session }}'
+        })
+    });
+    </script>
+</html>
