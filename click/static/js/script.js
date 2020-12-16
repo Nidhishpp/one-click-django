@@ -233,5 +233,8 @@ Version      : 1.0
 	$(window).on('load',function(){
 		$('.page-loading').fadeOut();
 	});
+
+	// Alertify
+	alertify.set('notifier','position', 'top-right');
 	
 })(jQuery);

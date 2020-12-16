@@ -1,0 +1,31 @@
+{% if messages %}
+{% for message in messages %}
+
+{% if message.tags == 'success' %}
+<script>
+var message = "{{ message }}"
+$( document ).ready(function() {
+    alertify.success(message); 
+});
+</script>
+{% endif %}
+
+{% if message.tags == 'warning' %}
+<script>
+var message = "{{ message }}"
+$( document ).ready(function() {
+    alertify.warning(message); 
+});
+</script>
+{% endif %}
+
+{% if message.tags == 'error' %}
+<script>
+var message = "{{ message }}"
+$( document ).ready(function() {
+    alertify.error(message); 
+});
+</script>
+{% endif %}
+{% endfor %}
+{% endif %}

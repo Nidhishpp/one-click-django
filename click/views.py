@@ -6,6 +6,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from .models import *
 from django.db.models import Count
+from django.contrib import messages
 
 # Test Functions
 
@@ -38,7 +39,8 @@ def services_page(request, id):
 
 
 def service_page(request, id):
-    serviceData = service.objects.annotate(avg_rating=Avg('comments__rating')).get(id=id)
+    serviceData = service.objects.annotate(
+        avg_rating=Avg('comments__rating')).get(id=id)
     reviews = comments.objects.filter(service=serviceData.id)
     relateds = service.objects.filter(
         category=serviceData.category.id).exclude(id=serviceData.id)
@@ -46,47 +48,65 @@ def service_page(request, id):
 
 
 def book_service(request, id):
-        if request.user.is_anonymous:
-            return redirect('click:login')
-        service_ = service.objects.get(id=id)
-        return render(request, 'book-service.html', {'service': service_})
+    if request.user.is_anonymous:
+        return redirect('click:login')
+    service_ = service.objects.get(id=id)
+    return render(request, 'book-service.html', {'service': service_})
+
 
 def book_service_insert(request, id):
-        service_ = service.objects.get(id=id)
-       
-        post = booking()
-        post.date = request.POST.get('date')
-        post.time = request.POST.get('time')
-        post.location = request.POST.get('location')
-        post.phn = request.POST.get('phone')
-        post.service = service_
-        post.user = request.user
-        post.save()
+    if request.POST.get('card_no') != '4111111111111111' and request.POST.get('cvv') != '111':
+        messages.error(request, 'Payment Error')
+        return redirect('/book-service/'+str(id))
+
+    service_ = service.objects.get(id=id)
+    post = booking()
+    post.date = request.POST.get('date')
+    post.time = request.POST.get('time')
+    post.location = request.POST.get('location')
+    post.phn = request.POST.get('phone')
+    post.service = service_
+    post.user = request.user
+    post.save()
+    messages.success(request, 'Booking Success')
+    return redirect('click:user-bookings')
+
+
+def cancel_booking(request):
+    book = booking.objects.get(id=request.POST.get('booking_id'))
+    book.reason = request.POST.get('reason')
+    book.status = 'Canceled'
+    book.save()
+    messages.warning(request, 'Booking Canceled')
+    if request.user.is_staff:
+        return redirect('click:staff-bookings')
+    else:
         return redirect('click:user-bookings')
 
-def booking_status(request):
 
-        book = booking.objects.get(id=request.POST.get('booking_id'))
-        book.reason = request.POST.get('reason')
-        book.status = 'Canceled'
-        book.save()
-        if request.user.is_staff :
-            return redirect('click:staff-bookings')
-        else :
-            return redirect('click:user-bookings')
+def booking_status(request):
+    book = booking.objects.get(id=request.POST.get('booking_id'))
+    book.status = request.POST.get('status')
+    book.save()
+    messages.success(request, 'Status updated')
+    if request.user.is_staff:
+        return redirect('click:staff-bookings')
+    else:
+        return redirect('click:user-bookings')
 
 
 def booking_comment(request):
-        book = booking.objects.get(id=request.POST.get('booking_id'))
-        serv = service.objects.get(id=request.POST.get('service_id'))
-        comm = comments()
-        comm.comment = request.POST.get('comment')
-        comm.rating = request.POST.get('rate')
-        comm.service = serv
-        comm.booking = book
-        comm.user = request.user
-        comm.save()
-        return redirect('click:user-bookings')
+    book = booking.objects.get(id=request.POST.get('booking_id'))
+    serv = service.objects.get(id=request.POST.get('service_id'))
+    comm = comments()
+    comm.comment = request.POST.get('comment')
+    comm.rating = request.POST.get('rate')
+    comm.service = serv
+    comm.booking = book
+    comm.user = request.user
+    comm.save()
+    messages.success(request, 'Rating Posted Successfully')
+    return redirect('click:user-bookings')
 
 
 @user_passes_test(not_auth, 'click:user-dashboard', redirect_field_name='')
@@ -114,40 +134,48 @@ def authLogin(request):
         else:
             return redirect('click:index')
     else:
+        messages.error(request, 'Error Login')
         return redirect('click:login')
 
 
 def authSignup(request):
-    first_name = request.POST['first_name']
-    last_name = request.POST['last_name']
-    username = request.POST['username']
-    email = request.POST['email']
-    # mobile = request.POST['mobile']
-    password = request.POST['password']
-    user = User.objects.create_user(username, email, password)
-    user.first_name = first_name
-    user.last_name = last_name
-    user.save()
-    profil = profile()
-    profil.dob = request.POST['date_of_birth']
-    profil.mobile = request.POST['mob']
-    profil.user = user
-    profil.save()
-    if user:
-        login(request, user)
-        return redirect('click:index')
-    else:
+    try:
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        user = User.objects.create_user(username, email, password)
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
+        profil = profile()
+        profil.dob = request.POST['date_of_birth']
+        profil.mobile = request.POST['mob']
+        profil.user = user
+        profil.save()
+        if user:
+            login(request, user)
+            return redirect('click:index')
+        else:
+            messages.error(request, 'Error Signup')
+            return redirect('click:login')
+    except:
+        messages.error(request, 'Error Signup')
         return redirect('click:login')
 
+
+
+
 def update_dp(request):
-    pro=profile.objects.get(id=request.user.profile.id)
-    pro.image=request.FILES.get('img')
+    pro = profile.objects.get(id=request.user.profile.id)
+    pro.image = request.FILES.get('img')
     pro.save()
-    if request.user.is_staff :
+    if request.user.is_staff:
         return redirect('click:staff-profile')
-    else :
+    else:
         return redirect('click:user-profile')
-        
+
 
 def authLogout(request):
     logout(request)

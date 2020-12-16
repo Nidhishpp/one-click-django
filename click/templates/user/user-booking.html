@@ -144,7 +144,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post" action="{% url 'click:booking_status' %}">
+            <form method="post" action="{% url 'click:cancel_booking' %}">
                 {% csrf_token %}
                 <div class="modal-body">
                     <input type="hidden" name="booking_id" id="booking_id">

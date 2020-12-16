@@ -28,6 +28,7 @@ urlpatterns = [
     path('staff/bookings', views.staffBooking, name='staff-bookings'),
     path('staff/profile', views.staffProfile, name='staff-profile'),
     path('dpupdate', views.update_dp, name='dpupdate'),
+    path('cancel-booking', views.cancel_booking, name='cancel_booking'),
     path('status-update', views.booking_status, name='booking_status'),
     path('booking-comment', views.booking_comment, name='booking_comment'),
     

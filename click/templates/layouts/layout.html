@@ -27,6 +27,11 @@
 
 	<link rel="stylesheet" href="{% static 'css/jquery.datetimepicker.css' %}">
 
+	<!-- CSS -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+	<!-- Default theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
+
 	<!-- Main CSS -->
 	<link rel="stylesheet" href="{% static 'css/style.css' %}">
 
@@ -61,8 +66,10 @@
 	<!-- jQuery -->
 	<script src="{% static 'js/jquery-3.5.0.min.js' %}"></script>
 
-	<!-- jQuery UI --> 
-	{% comment %} <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script> {% endcomment %}
+	<!-- jQuery UI -->
+	{% comment %} <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+		integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+	{% endcomment %}
 
 	<!-- Bootstrap Core JS -->
 	<script src="{% static 'js/popper.min.js' %}"></script>
@@ -80,9 +87,12 @@
 	<!-- Owl JS -->
 	<script src="{% static 'plugins/owlcarousel/owl.carousel.min.js' %}"></script>
 
+	<!-- Alertify JS -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
 	<!-- Custom JS -->
 	<script src="{% static 'js/script.js' %}"></script>
-
+	{% include 'includes/messages.html' %}
 	{% block script %}{% endblock %}
 </body>
 
