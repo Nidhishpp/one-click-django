@@ -1,5 +1,7 @@
 {% extends "layouts/layout.html" %}
 
+{% load extra_tags %}
+
 {% block title %}Services{% endblock %}
 
 {% block content %}
@@ -86,20 +88,20 @@
                 </div>
                 <div>
                     <div class="row">
-                    {% for service in services %}
+                        {% for service in services %}
                         <div class="col-lg-3 col-md-4">
                             <div class="service-widget">
                                 <div class="service-img">
                                     <a href="{% url 'click:service' id=service.id %}">
-                                        <img class="img-fluid serv-img" alt="Service Image"
-                                            src="{{service.image.url}}">
+                                        <img class="img-fluid serv-img" alt="Service Image" src="{{service.image.url}}">
                                     </a>
                                     <div class="item-info">
                                         <div class="service-user">
-                                            <span class="service-price">₹{{service.price}}</span>	
+                                            <span class="service-price">₹{{service.price}}</span>
                                         </div>
                                         <div class="cate-list">
-                                            <a class="bg-yellow" href="{% url 'click:service' id=service.id %}">{{service.category.title}}</a>
+                                            <a class="bg-yellow"
+                                                href="{% url 'click:service' id=service.id %}">{{service.category.title}}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -108,21 +110,18 @@
                                         <a href="{% url 'click:service' id=service.id %}">{{service.title}}</a>
                                     </h3>
                                     <div class="rating">
+                                        {% for i in service.avg_rating|times %}
                                         <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star"></i>
-                                        <span class="d-inline-block average-rating">(4.3)</span>
+                                        {% endfor %}
                                     </div>
                                     <div class="user-info">
-                                        
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                         {% endfor %}
-                       
+
 
                     </div>
                 </div>

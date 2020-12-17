@@ -15,7 +15,7 @@ class category(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = "Categorie"
+        verbose_name = "Categories"
 
 
 class service(models.Model):

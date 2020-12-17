@@ -88,26 +88,26 @@
                             <div class="col-6">
                                 <div class="form-group form-focus">
                                     <label class="focus-label">Email</label>
-                                    <input type="email" name="email" class="form-control" placeholder="johndoe@exapmle.com" required>
+                                    <input type="email" name="email" class="form-control" placeholder="johndoe@example.com" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
                                     <label class="focus-label">Mobile Number</label>
-                                    <input type="text" name="mob" class="form-control" placeholder="986 452 1236" required>
+                                    <input type="text" name="mob" class="form-control" placeholder="986 452 1236" maxlength="10" minlength="10" autocomplete="off" required>
                                 </div>
                             </div>
                             
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
                                     <label class="focus-label">DOB</label>
-                                    <input class="form-control datepicker " type="text" name="date_of_birth" required>
+                                    <input class="form-control datepicker " type="text" name="date_of_birth" autocomplete="off" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
                                     <label class="focus-label">Create Password</label>
-                                    <input type="password" name="password" class="form-control" placeholder="********" required>
+                                    <input type="password" name="password" class="form-control" maxlength="6" minlength="30" placeholder="********" required>
                                 </div>
                             </div>
                         </div>
@@ -126,7 +126,7 @@
         $(".datepicker").datetimepicker({
             timepicker: false,
             format: 'Y-m-d',
-            minDate: +2,
+            maxDate: new Date()
         });
     });
 </script>

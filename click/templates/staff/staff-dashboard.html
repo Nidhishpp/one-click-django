@@ -13,13 +13,13 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <a href="{% url 'click:staff-bookings' %}" class="dash-widget dash-bg-1">
-                            <span class="dash-widget-icon">245</span>
+                            <span class="dash-widget-icon">{{bookings_count}}</span>
                             <div class="dash-widget-info">
                                 <span>Bookings</span>
                             </div>
                         </a>
                     </div>
-                    <div class="col-lg-4">
+                    {% comment %} <div class="col-lg-4">
                         <a href="#" class="dash-widget dash-bg-2">
                             <span class="dash-widget-icon">66</span>
                             <div class="dash-widget-info">
@@ -34,7 +34,7 @@
                                 <span>Notification</span>
                             </div>
                         </a>
-                    </div>
+                    </div> {% endcomment %}
                 </div>
                 {% comment %} <div class="card mb-0">
                     <div class="row no-gutters">

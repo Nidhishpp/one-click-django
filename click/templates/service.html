@@ -20,7 +20,8 @@
                             {% for i in service.avg_rating|times %}
                             <i class="fas fa-star filled"></i>
                             {% endfor %}
-                            {% comment %} <span class="d-inline-block average-rating">({{ service.avg_rating}})</span> {% endcomment %}
+                            {% comment %} <span class="d-inline-block average-rating">({{ service.avg_rating}})</span>
+                            {% endcomment %}
                         </div>
                         <div class="service-cate">
                             {{ service.category.title }}
@@ -97,7 +98,7 @@
                                             </div>
                                             <div class="review-count">
                                                 <div class="rating">
-                                                    {% for i in review.rating|times %}
+                                                    {% for i in review.avg_rating|times %}
                                                     <i class="fas fa-star filled"></i>
                                                     {% endfor %}
                                                     {% comment %} <i class="fas fa-star"></i> {% endcomment %}
@@ -120,7 +121,7 @@
                         {% for related in relateds %}
                         <div class="service-widget">
                             <div class="service-img">
-                                <a href="service-details.html">
+                                <a href="{% url 'click:service' id=related.id %}">
                                     <img class="img-fluid serv-img" alt="Service Image" src="{{ related.image.url }}">
                                 </a>
                                 <div class="item-info">
@@ -129,21 +130,18 @@
                                     </div>
                                     <div class="cate-list">
                                         <a class="bg-yellow"
-                                            href="service-details.html">{{ related.category.title }}</a>
+                                            href="{% url 'click:service' id=related.id %}">{{ related.category.title }}</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="service-content">
                                 <h3 class="title">
-                                    <a href="service-details.html">{{ related.title }}</a>
+                                    <a href="{% url 'click:service' id=related.id %}">{{ related.title }}</a>
                                 </h3>
                                 <div class="rating">
+                                    {% for i in related.avg_rating|times %}
                                     <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star"></i>
-                                    <span class="d-inline-block average-rating">(4.5)</span>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
@@ -157,7 +155,7 @@
                         <span>₹{{ service.price }}</span>
                     </div>
                     <div class="service-book">
-                    
+
                         <a href="/book-service/{{service.id}}" class="btn btn-primary"> Book Service </a>
                     </div>
                 </div>

@@ -35,7 +35,7 @@ def categories(request):
 
 
 def services_page(request, id):
-    services = service.objects.filter(category=id)
+    services = service.objects.annotate(avg_rating=Avg('comments__rating')).filter(category=id)
     services_count = len(services)
     return render(request, 'services.html', {'services': services, 'services_count': services_count})
 
@@ -44,7 +44,7 @@ def service_page(request, id):
     serviceData = service.objects.annotate(
         avg_rating=Avg('comments__rating')).get(id=id)
     reviews = comments.objects.filter(service=serviceData.id)
-    relateds = service.objects.filter(
+    relateds = service.objects.annotate(avg_rating=Avg('comments__rating')).filter(
         category=serviceData.category.id).exclude(id=serviceData.id)
     return render(request, 'service.html', {'service': serviceData, 'reviews': reviews, 'relateds': relateds})
 
@@ -215,7 +215,11 @@ def user(request):
 
 @login_required(login_url='click:login', redirect_field_name='')
 def userDashboard(request):
-    return render(request, 'user/user-dashboard.html')
+    bookings = booking.objects.filter(user=request.user)
+    reviews = comments.objects.filter(user=request.user)
+    bookings_count = len(bookings)
+    reviews_count = len(reviews)
+    return render(request, 'user/user-dashboard.html',{'bookings_count':bookings_count,'reviews_count':reviews_count})
 
 
 @login_required(login_url='click:login', redirect_field_name='')
@@ -243,7 +247,9 @@ def staff(request):
 
 @login_required(login_url='click:login', redirect_field_name='')
 def staffDashboard(request):
-    return render(request, 'staff/staff-dashboard.html')
+    bookings = booking.objects.filter(staff=request.user)
+    bookings_count = len(bookings)
+    return render(request, 'staff/staff-dashboard.html',{'bookings_count':bookings_count})
 
 
 @login_required(login_url='click:login', redirect_field_name='')
